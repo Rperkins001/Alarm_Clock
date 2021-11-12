@@ -1,12 +1,13 @@
 import datetime
 from builtins import input
-from time import sleep
+import time 
 import webbrowser
 
-
+time_now = datetime.datetime.now()
 
 
 def get_hour():
+    global hour_choice
     while True:
         hour_choice = input("Please select an hour for the alarm: ")
         if not hour_choice.isdigit():
@@ -19,6 +20,7 @@ def get_hour():
         print("Error: Hour choice must be between 1-12.")
 
 def get_minute():
+    global minute_choice
     while True:
         minute_choice = input("Please select the minute for the alarm: ")
         if not minute_choice.isdigit():
@@ -31,41 +33,56 @@ def get_minute():
         print("Error: Minute choice must be between 0-59.")
           
 def get_meridiem():
-    valid_inputs = ["am", "pm"]
-    mer = input("Is that AM or PM?: ").lower()
+    global mer
+    valid_inputs = ["AM", "PM"]
+    mer = input("Is that AM or PM?: ").upper()
     if mer not in valid_inputs:
         print("Error: You must choose between AM or PM.")
         return get_meridiem()
 
+
+
 def countdown_clock():
     cc = int(input("How many minutes until alarm? "))
+    global time_change
+    global new_time
     time_change = datetime.timedelta(minutes = cc)
     new_time = time_now + time_change
-    print(time_change)
-    while True:
-        if time_now >= new_time:
-            print('done')
-        else:
-            continue
-        time.sleep(1)  
+    print(f'Alarm will activate at {new_time}.  Please wait.')
+    clock_process()
 
+def clock_process():
+    time_now = datetime.datetime.now()
+    if (time_now >= new_time):
+        webbrowser.open('https://youtu.be/dQw4w9WgXcQ?t=43')
+    else:
+        time.sleep(1)
+        clock_process()    
 
+def clock_process2():
+  
+    time_now = datetime.datetime.now()
+    a = [time_now.strftime("%I"), time_now.strftime("%M"), time_now.strftime("%p")]
+    b = [str(hour_choice).zfill(2), str(minute_choice).zfill(2), str(mer)]
+   
+    if (a==b):
+        webbrowser.open('https://youtu.be/dQw4w9WgXcQ?t=43')
+    else:
+        time.sleep(1)
+        clock_process()
 
 def alarm_clock():
-    time_now = datetime.datetime.now()
+    
     print("Please choose a time when the alarm should activate. ")
     hour = get_hour()
     minute = get_minute()
     meridiem = get_meridiem()
+    print('Alarm Set.')
 
-    a = [time_now.strftime("%I,"), time_now.strftime("%M"), time_now.strftime("%p")]
-    b = [hour, minute, meridiem]
-    while True:
-        if a == b:
-            print('done')
-        else:
-            continue
-        time.sleep(1)       
+    clock_process2()
+
+
+              
   
   
 def clock_type():
