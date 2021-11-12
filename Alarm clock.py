@@ -1,10 +1,7 @@
 import datetime
-from builtins import input
 import time 
 import webbrowser
-
-time_now = datetime.datetime.now()
-
+from builtins import input
 
 def get_hour():
     global hour_choice
@@ -40,11 +37,9 @@ def get_meridiem():
         print("Error: You must choose between AM or PM.")
         return get_meridiem()
 
-
-
 def countdown_clock():
+    time_now = datetime.datetime.now()
     cc = int(input("How many minutes until alarm? "))
-    global time_change
     global new_time
     time_change = datetime.timedelta(minutes = cc)
     new_time = time_now + time_change
@@ -59,20 +54,7 @@ def clock_process():
         time.sleep(1)
         clock_process()    
 
-def clock_process2():
-  
-    time_now = datetime.datetime.now()
-    a = [time_now.strftime("%I"), time_now.strftime("%M"), time_now.strftime("%p")]
-    b = [str(hour_choice).zfill(2), str(minute_choice).zfill(2), str(mer)]
-   
-    if (a==b):
-        webbrowser.open('https://youtu.be/dQw4w9WgXcQ?t=43')
-    else:
-        time.sleep(1)
-        clock_process()
-
 def alarm_clock():
-    
     print("Please choose a time when the alarm should activate. ")
     hour = get_hour()
     minute = get_minute()
@@ -81,9 +63,16 @@ def alarm_clock():
 
     clock_process2()
 
-
-              
-  
+def clock_process2():
+    time_now = datetime.datetime.now()
+    a = [time_now.strftime("%I"), time_now.strftime("%M"), time_now.strftime("%p")]
+    b = [str(hour_choice).zfill(2), str(minute_choice).zfill(2), str(mer)]
+   
+    if (a==b):
+        webbrowser.open('https://youtu.be/dQw4w9WgXcQ?t=43')
+    else:
+        time.sleep(1)
+        clock_process2()
   
 def clock_type():
     valid_inputs2 = ["1", "2"]
